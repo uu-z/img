@@ -1,6 +1,6 @@
 <template lang="pug">
   div(id="app")
-    Menu(mode="horizontal" theme="dark" active-name="1")
+    Menu(mode="horizontal" theme="light" active-name="1")
       MenuItem(name="1")
         router-link(to="/danboru") danboru
       MenuItem(name="2")
@@ -9,12 +9,9 @@
 </template>
 
 <script>
-export default {
-  name: "crawl"
-};
+export default {};
 </script>
 
 <style lang="stylus">
-@import url('~iview/dist/styles/iview.css')
-@import url('~viewerjs/dist/viewer.css')
+@import url('~iview/dist/styles/iview.css');
 </style>
