@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    Input(v-model="options.params.tags" @on-enter="reload(options.params.tags)")
+    Input(v-model="options.params.tags" @on-enter="reload(options.params.tags)" )
       Button(slot="append" icon="ios-search" @click="reload(options.params.tags)")
     div
       Tag(closable @click.native="reload(item)" :key="index" v-for="(item, index) in searchTags" @on-close="removeTags(index)") {{item}}
@@ -73,12 +73,13 @@ export default {
 		},
 		reload(tags) {
 			this.searchTags = [...new Set([tags, ...this.searchTags])];
-			this.$router.go({
-				name: 'danboru',
-				query: {
-					hash: Math.random()
-				}
+			this.imgsArr = [];
+			this.options.params = Object.assign(this.options.params, {
+				tags,
+				ms: 1,
+				page: 0
 			});
+			this.loadImage();
 		},
 		removeTags(index) {
 			this.searchTags.splice(index, 1);
