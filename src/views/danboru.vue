@@ -106,5 +106,7 @@ export default {
 .ivu-menu-horizontal {
   height: 40px;
   line-height: 40px;
+  display: flex;
+  justify-content: center;
 }
 </style>
