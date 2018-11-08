@@ -5,7 +5,7 @@
     div
       Tag(closable @click.native="reload(item)" :key="index" v-for="(item, index) in searchTags" @on-close="removeTags(index)") {{item}}
     div.waterfall-box
-      vue-waterfall-easy(:maxCols="10" :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
+      vue-waterfall-easy(:maxCols="5" :imgWidth="240"  :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
     // infinite-loading(@infinite="loadImage")
 </template>
 
@@ -22,7 +22,6 @@ export default {
 				method: 'GET',
 				url: 'https://danbooru.donmai.us/posts',
 				params: {
-					ms: 1,
 					page: 0,
 					tags: 'rating:safe favcount:>100',
 					utf8: '✓'
@@ -76,7 +75,6 @@ export default {
 			this.imgsArr = [];
 			this.options.params = Object.assign(this.options.params, {
 				tags,
-				ms: 1,
 				page: 0
 			});
 			this.loadImage();
