@@ -1,11 +1,12 @@
 <template lang="pug">
   div
-    Input(v-model="options.params.tags" @on-enter="reload(options.params.tags)" )
-      Button(slot="append" icon="ios-search" @click="reload(options.params.tags)")
-    div
-      Tag(closable @click.native="reload(item)" :key="index" v-for="(item, index) in searchTags" @on-close="removeTags(index)") {{item}}
+    .toolbox(v-if="$refs.waterfall" :style="{color: 'red', width: waterfallWidth + 'px'}")
+      Input(v-model="options.params.tags" @on-enter="reload(options.params.tags)" )
+        Button(slot="append" icon="ios-search" @click="reload(options.params.tags)")
+      div.tags
+        Tag(closable @click.native="reload(item)" :key="index" v-for="(item, index) in searchTags" @on-close="removeTags(index)") {{item}}
     div.waterfall-box
-      vue-waterfall-easy(:maxCols="5" :imgWidth="240"  :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
+      vue-waterfall-easy(ref="waterfall" :maxCols="5" :imgWidth="240"  :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
     // infinite-loading(@infinite="loadImage")
 </template>
 
@@ -30,6 +31,12 @@ export default {
 			imgsArr: [],
 			searchTags: []
 		};
+	},
+	computed: {
+		waterfallWidth() {
+			const { colWidth, cols } = this.$refs.waterfall;
+			return colWidth * cols;
+		}
 	},
 	watch: {
 		searchTags(val) {
@@ -89,5 +96,15 @@ export default {
 <style lang="stylus">
 .waterfall-box {
   height: calc(100vh - 120px);
+}
+
+.toolbox {
+  margin: 10px auto;
+  padding-right: 15px;
+}
+
+.ivu-menu-horizontal {
+  height: 40px;
+  line-height: 40px;
 }
 </style>

@@ -21,7 +21,8 @@ const Components = {
 	Tag,
 	Input,
 	Icon,
-	Menu,
+  Menu,
+  Card,
 	MenuItem
 };
 

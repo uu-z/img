@@ -12,4 +12,8 @@ export default {};
 
 <style lang="stylus">
 @import url('~iview/dist/styles/iview.css');
+
+body {
+  background: #f5f5f5;
+}
 </style>
