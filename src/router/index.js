@@ -6,7 +6,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/danboru',
+      path: '/',
       name: 'danboru',
       component: require('@/views/danboru').default
     },
