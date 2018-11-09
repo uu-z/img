@@ -8,7 +8,11 @@ import iview from 'iview';
 
 import vueWaterfallEasy from 'vue-waterfall-easy'
 
-const { Button, Menu, MenuItem, Modal, BackTop, Tag, Input, Affix, Card, Form, FormItem, Notice, Message, Icon } = iview;
+if(process.env.NODE_ENV != "prod") {
+  window.axios = axios
+}
+
+const { Button, RadioGroup, FormItem, Form, Radio, Select, Option, Menu, MenuItem, Modal, Tag, Input, Card, Icon } = iview;
 
 
 const Plugins = {
@@ -16,13 +20,19 @@ const Plugins = {
 
 const Components = {
 	vueWaterfallEasy,
+	Select,
+	Option,
 	Button,
 	Modal,
 	Tag,
 	Input,
 	Icon,
-  Menu,
-  Card,
+	Menu,
+	Card,
+	RadioGroup,
+	FormItem,
+	Form,
+	Radio,
 	MenuItem
 };
 

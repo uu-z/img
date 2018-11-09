@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    .toolbox(v-if="$refs.waterfall" :style="{color: 'red', width: waterfallWidth + 'px'}")
+    .toolbox(v-if="$refs.waterfall" :style="{color: 'red', maxWidth: waterfallWidth + 'px'}")
       Input(v-model="options.params.tags" @on-enter="reload(options.params.tags)" )
         Button(slot="append" icon="ios-search" @click="reload(options.params.tags)")
       div.tags
@@ -13,8 +13,7 @@
 <script>
 import axios from 'axios';
 import cheerio from 'cheerio';
-import { event } from '../utils/Event';
-global.axios = axios;
+import store2 from 'store2';
 
 export default {
 	data() {
@@ -40,11 +39,11 @@ export default {
 	},
 	watch: {
 		searchTags(val) {
-			localStorage.setItem('searchTags', JSON.stringify(val));
+			store2.set('danboru-searchTags', val);
 		}
 	},
 	async mounted() {
-		this.searchTags = JSON.parse(localStorage.getItem('searchTags')) || [];
+		this.searchTags = store2.get('danboru-searchTags') || [];
 		this.options.params.tags = this.searchTags[0] || this.options.params.tags;
 		this.loadImage();
 	},
@@ -95,18 +94,18 @@ export default {
 
 <style lang="stylus">
 .waterfall-box {
-  height: calc(100vh - 120px);
+	height: calc(100vh - 120px);
 }
 
 .toolbox {
-  margin: 10px auto;
-  padding-right: 15px;
+	margin: 10px auto;
+	padding-right: 1vw;
 }
 
 .ivu-menu-horizontal {
-  height: 40px;
-  line-height: 40px;
-  display: flex;
-  justify-content: center;
+	height: 40px;
+	line-height: 40px;
+	display: flex;
+	justify-content: center;
 }
 </style>

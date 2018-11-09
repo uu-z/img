@@ -1,6 +1,6 @@
 <template lang="pug">
   div(id="app")
-    Menu(mode="horizontal" theme="light" active-name="1")
+    Menu(mode="horizontal" theme="light" )
       MenuItem(name="1" to="/danboru") danboru
       MenuItem(name="2" to="/pixiv") pixiv
     router-view
