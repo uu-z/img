@@ -102,7 +102,7 @@ export default {
 		z-index: -1;
 
 		.vue-waterfall-easy-scroll {
-			padding-top: 100px;
+			padding-top: 60px;
 		}
 	}
 
