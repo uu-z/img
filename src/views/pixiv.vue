@@ -115,7 +115,7 @@ export default {
 
 <style lang="stylus" scoped>
 .waterfall-box {
-	height: calc(100vh - 120px);
+	height: 100vh;
 }
 
 .toolbox {
