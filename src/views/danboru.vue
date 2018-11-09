@@ -92,20 +92,13 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .waterfall-box {
-	height: calc(100vh - 120px);
+	height: 100vh;
 }
 
 .toolbox {
 	margin: 10px auto;
 	padding-right: 1vw;
-}
-
-.ivu-menu-horizontal {
-	height: 40px;
-	line-height: 40px;
-	display: flex;
-	justify-content: center;
 }
 </style>

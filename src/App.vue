@@ -16,4 +16,11 @@ export default {};
 body {
   background: #f5f5f5;
 }
+
+.ivu-menu-horizontal {
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  justify-content: center;
+}
 </style>

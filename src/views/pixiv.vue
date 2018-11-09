@@ -113,7 +113,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .waterfall-box {
 	height: calc(100vh - 120px);
 }
@@ -123,12 +123,5 @@ export default {
 	padding-right: 1vw;
 	display: flex;
 	justify-content: space-between;
-}
-
-.ivu-menu-horizontal {
-	height: 40px;
-	line-height: 40px;
-	display: flex;
-	justify-content: center;
 }
 </style>
