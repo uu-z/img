@@ -73,7 +73,6 @@ export default {
 	watch: {},
 	async mounted() {
 		this.loadImage();
-		// await pixiv.login('ncysatanf@gmail.com', 'Daisukichelly0');
 	},
 	methods: {
 		async clickFn(event, { index, value }) {},
