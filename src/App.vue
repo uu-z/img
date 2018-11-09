@@ -1,13 +1,23 @@
 <template lang="pug">
   div(id="app")
     Menu(mode="horizontal" theme="light" )
-      MenuItem(name="1" to="/danboru") danboru
-      MenuItem(name="2" to="/pixiv") pixiv
+      MenuItem(name="1" to="/danboru") Danboru
+      MenuItem(name="2" to="/pixiv") Pixiv
+      .ButtonGroup
+        Button(shape="circle" type="text" icon="logo-github" @click="goGithub")
+        //- Button(shape="circle" type="text" icon="logo-twitter")
+
     router-view
 </template>
 
 <script>
-export default {};
+export default {
+	methods: {
+		goGithub() {
+			window.location.href = 'https://github.com/uu-z/img';
+		}
+	}
+};
 </script>
 
 <style lang="stylus">
@@ -15,6 +25,13 @@ export default {};
 
 body {
   background: #f5f5f5;
+}
+
+.ButtonGroup {
+  align-self: center;
+  right: 2vw;
+  position: absolute;
+  display: flex;
 }
 
 .ivu-menu-horizontal {

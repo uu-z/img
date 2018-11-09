@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import ga from 'vue-ga';
 
 Vue.use(Router)
 
-export default new Router({
+const router =  new Router({
   routes: [
     {
       path: '/',
@@ -21,3 +22,7 @@ export default new Router({
     }
   ]
 })
+
+ga(router, 'UA-128746837-2');
+
+export default router
