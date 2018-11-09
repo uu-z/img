@@ -1,11 +1,11 @@
 <template lang="pug">
-  div
+  .danboru
     .toolbox(v-if="$refs.waterfall" :style="{color: 'red', maxWidth: waterfallWidth + 'px'}")
       Input(v-model="options.params.tags" @on-enter="reload(options.params.tags)" )
         Button(slot="append" icon="ios-search" @click="reload(options.params.tags)")
-      div.tags
+      .tags
         Tag(closable @click.native="reload(item)" :key="index" v-for="(item, index) in searchTags" @on-close="removeTags(index)") {{item}}
-    div.waterfall-box
+    .waterfall-box
       vue-waterfall-easy(ref="waterfall" :maxCols="5" :imgWidth="240"  :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
     // infinite-loading(@infinite="loadImage")
 </template>
@@ -92,13 +92,25 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-.waterfall-box {
-	height: 100vh;
-}
+<style lang="stylus">
+.danboru {
+	.waterfall-box {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+		z-index: -1;
 
-.toolbox {
-	margin: 10px auto;
-	padding-right: 1vw;
+		.vue-waterfall-easy-scroll {
+			padding-top: 100px;
+		}
+	}
+
+	.toolbox {
+		margin: 0 auto;
+		padding 5px 0
+		padding-right: 1vw;
+		background: #f5f5f5;
+	}
 }
 </style>

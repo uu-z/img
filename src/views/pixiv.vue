@@ -1,12 +1,12 @@
 <template lang="pug">
-  div
+  .pixiv
     .toolbox(v-if="$refs.waterfall" :style="{ maxWidth: waterfallWidth + 'px'}")
       Select(v-model="options.params.mode" @on-change="reload" :style="{flex: 1}")
         Option(v-for="item in modes" :value="item.mode" :key="item.mode") {{item.label}}
       RadioGroup(v-model="type" type="button" @on-change="reload")
         Radio(label="正常")
         Radio(label="R18" disabled)
-    div.waterfall-box
+    .waterfall-box
       vue-waterfall-easy(ref="waterfall" :maxCols="5" :imgWidth="240" srcKey="url" :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
 </template>
 
@@ -112,15 +112,28 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-.waterfall-box {
-	height: 100vh;
+<style lang="stylus">
+.pixiv{
+	.waterfall-box {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+		z-index: -1;
+
+		.vue-waterfall-easy-scroll {
+			padding-top: 50px;
+		}
+	}
+
+	.toolbox {
+		margin: 0 auto;
+		padding 5px 0
+		background: #f5f5f5;
+		padding-right: 1vw;
+		display: flex;
+		justify-content: space-between;
+	}
 }
 
-.toolbox {
-	margin: 10px auto;
-	padding-right: 1vw;
-	display: flex;
-	justify-content: space-between;
-}
 </style>
