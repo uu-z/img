@@ -8,6 +8,12 @@
         Radio(label="R18" disabled)
     .waterfall-box
       vue-waterfall-easy(ref="waterfall" :maxCols="5" :imgWidth="240" srcKey="url" :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
+        .img-info(slot-scope="props")
+          a(:href="'https://www.pixiv.net/member_illust.php?mode=medium&illust_id=' + props.value.illust_id").title {{props.value.title}}
+          .user-info
+            Avatar(:src="props.value.profile_img")
+            a(:href="'https://www.pixiv.net/member.php?id=' + props.value.user_id ").user-name {{props.value.user_name}} 
+            
 </template>
 
 <script>
@@ -95,6 +101,7 @@ export default {
 
 			let contents = get(result, 'data.contents', []);
 			contents = contents.map((i) => {
+        i.profile_img = i.profile_img.replace('i.pximg.net', 'i.pixiv.cat');
 				i.url = i.url.replace('i.pximg.net', 'i.pixiv.cat');
 				return i;
 			});
@@ -128,12 +135,31 @@ export default {
 
 	.toolbox {
 		margin: 0 auto;
-		padding 5px 0
+		padding  0 0 5px 0
 		background: #f5f5f5;
 		padding-right: 1vw;
 		display: flex;
 		justify-content: space-between;
 	}
+  .img-info{
+    padding: 8px
+    background: #fff
+    border-bottom-right-radius 5px
+    border-bottom-left-radius 5px
+    .user-info {
+      display flex
+      align-items  center
+      .user-name {
+        margin-left 4px
+      }
+    }
+    .title {
+      display block
+      color #6e8d92 
+      font-size 14px
+      margin 6px 0
+    }
+  }
 }
 
 </style>

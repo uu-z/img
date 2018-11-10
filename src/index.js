@@ -12,7 +12,7 @@ if(process.env.NODE_ENV != "prod") {
   window.axios = axios
 }
 
-const { Button, RadioGroup, FormItem, Form, Radio, Select, Option, Menu, MenuItem, Modal, Tag, Input, Card, Icon } = iview;
+const { Button, RadioGroup, Avatar, FormItem, Form, Radio, Select, Option, Menu, MenuItem, Modal, Tag, Input, Card, Icon } = iview;
 
 
 const Plugins = {
@@ -33,6 +33,7 @@ const Components = {
 	FormItem,
 	Form,
 	Radio,
+	Avatar,
 	MenuItem
 };
 

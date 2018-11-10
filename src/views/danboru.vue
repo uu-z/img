@@ -7,7 +7,7 @@
         Tag(closable @click.native="reload(item)" :key="index" v-for="(item, index) in searchTags" @on-close="removeTags(index)") {{item}}
     .waterfall-box
       vue-waterfall-easy(ref="waterfall" :maxCols="5" :imgWidth="240"  :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
-    // infinite-loading(@infinite="loadImage")
+        .img-info(slot-scope="props")
 </template>
 
 <script>
@@ -49,13 +49,19 @@ export default {
 	},
 	methods: {
 		async clickFn(event, { index, value }) {
-			const { id } = value;
+      const { id, isHD } = value;
+      if(isHD) {
+        window.location.href = `https://danbooru.donmai.us/posts/` + id
+      }
 			let detail = await axios.get(`https://danbooru.donmai.us/posts/${id}`);
 			let html = cheerio.load(detail.data);
 			if (!html) return;
-			let img = html('#image').prop('src');
-			if (img !== undefined) {
-				this.imgsArr[index].src = img;
+			let src = html('#image').prop('src');
+			if (src !== undefined) {
+         Object.assign(value, {
+          src,
+          isHD: true
+        })
 			}
 		},
 		async loadImage(state) {
