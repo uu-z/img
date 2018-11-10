@@ -1,13 +1,13 @@
 <template lang="pug">
   .danboru
-    .toolbox(v-if="$refs.waterfall" :style="{color: 'red', maxWidth: waterfallWidth + 'px'}")
-      Input(v-model="options.params.tags" @on-enter="reload(options.params.tags)" )
-        Button(slot="append" icon="ios-search" @click="reload(options.params.tags)")
+    .toolbox( v-if="$refs.waterfall"  :style="{ maxWidth: waterfallWidth + 'px'}")
+      Input(v-model="options.params.tags" search enter-button @on-search="reload(options.params.tags)" @on-enter="reload(options.params.tags)" )
       .tags
         Tag(closable @click.native="reload(item)" :key="index" v-for="(item, index) in searchTags" @on-close="removeTags(index)") {{item}}
     .waterfall-box
       vue-waterfall-easy(ref="waterfall" :maxCols="5" :imgWidth="240"  :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
         .img-info(slot-scope="props")
+          a(:href="'https://danbooru.donmai.us/posts/' + props.value.id") id: {{props.value.id}}
 </template>
 
 <script>
@@ -49,19 +49,19 @@ export default {
 	},
 	methods: {
 		async clickFn(event, { index, value }) {
-      const { id, isHD } = value;
-      if(isHD) {
-        window.location.href = `https://danbooru.donmai.us/posts/` + id
-      }
+			const { id, isHD } = value;
+			if (isHD) {
+				window.location.href = `https://danbooru.donmai.us/posts/` + id;
+			}
 			let detail = await axios.get(`https://danbooru.donmai.us/posts/${id}`);
 			let html = cheerio.load(detail.data);
 			if (!html) return;
 			let src = html('#image').prop('src');
 			if (src !== undefined) {
-         Object.assign(value, {
-          src,
-          isHD: true
-        })
+				Object.assign(value, {
+					src,
+					isHD: true
+				});
 			}
 		},
 		async loadImage(state) {
@@ -108,15 +108,31 @@ export default {
 		z-index: -1;
 
 		.vue-waterfall-easy-scroll {
-			padding-top: 60px;
+			padding-top: 120px;
 		}
 	}
 
+  .img-info {
+        padding: 15px 10px;
+        background: #21243a;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        a {
+          color rgba(255,255,255,0.5)
+        }
+  }
+
 	.toolbox {
 		margin: 0 auto;
-		padding 5px 0
-		padding-right: 1vw;
-		background: #f5f5f5;
+		padding: 4px 10vw;
 	}
+  .tags {
+    display flex
+    justify-content center
+    margin-top 2px
+  }
+  .ivu-input-group-append {
+    border-radius 50px
+  }
 }
 </style>

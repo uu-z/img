@@ -1,22 +1,11 @@
 <template lang="pug">
   div(id="app")
-    Menu(mode="horizontal" theme="light" )
-      MenuItem(name="1" to="/danboru") Danboru
-      MenuItem(name="2" to="/pixiv") Pixiv
-      .ButtonGroup
-        Button(shape="circle" type="text" icon="logo-github" @click="goGithub")
-        //- Button(shape="circle" type="text" icon="logo-twitter")
-
+    Topmenu
     router-view
 </template>
 
 <script>
 export default {
-	methods: {
-		goGithub() {
-			window.location.href = 'https://github.com/uu-z/img';
-		}
-	}
 };
 </script>
 
@@ -24,7 +13,7 @@ export default {
 @import url('~iview/dist/styles/iview.css');
 
 body {
-  background: #f5f5f5;
+  background: #151c2d;
 }
 #app {
   .vue-waterfall-easy-container {
@@ -37,6 +26,10 @@ body {
         img {
           border-top-right-radius 5px
           border-top-left-radius 5px
+      		opacity 0.85
+        }
+        img:hover{
+          opacity 0.9
         }
       }
       .img-inner-box::after {
@@ -72,10 +65,56 @@ body {
   }
 
   .ivu-menu-horizontal {
+    background #21243a
+    border-color #21243a
     height: 40px;
     line-height: 40px;
     display: flex;
     justify-content: center;
+  }
+  .ivu-input-group {
+    .ivu-input {
+      background #21243a
+      border none 
+      color rgba(255,255,255,0.8)
+      border-top-left-radius 50px
+      border-bottom-left-radius 50px
+      text-indent 10px
+    }
+  }
+  .ivu-tag {
+    background #21243a
+    border none
+    border-radius 25px
+    .ivu-tag-text{
+      color rgba(255,255,255,0.5)
+    }
+  }
+
+  .ivu-select-selection {
+    background #21243a
+    color rgba(255,255,255,0.8)
+    border none
+    border-radius 50px
+    text-indent 10px
+  }
+  .ivu-select-item {
+    background #21243a
+    color rgba(255,255,255,0.5)
+  }
+  .ivu-select-item-selected{
+    color #2d8cf0
+  }
+  .ivu-select-dropdown {
+    background #21243a
+  }
+
+  ::-webkit-scrollbar {
+    background:rgba(255,255,255,0.05);
+  }
+  ::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,0.1);
+    border-radius 100px
   }
 }
 

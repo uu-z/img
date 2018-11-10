@@ -5,20 +5,23 @@ import store from './store'
 
 import axios from 'axios'
 import iview from 'iview';
+import * as componens from "./components"
 
 import vueWaterfallEasy from 'vue-waterfall-easy'
+
 
 if(process.env.NODE_ENV != "prod") {
   window.axios = axios
 }
 
-const { Button, RadioGroup, Avatar, FormItem, Form, Radio, Select, Option, Menu, MenuItem, Modal, Tag, Input, Card, Icon } = iview;
+const { Button, BackTop,Affix,RadioGroup, Avatar, FormItem, Form, Radio, Select, Option, Menu, MenuItem, Modal, Tag, Input, Card, Icon } = iview;
 
 
 const Plugins = {
 }
 
 const Components = {
+	...componens,
 	vueWaterfallEasy,
 	Select,
 	Option,
@@ -33,6 +36,8 @@ const Components = {
 	FormItem,
 	Form,
 	Radio,
+	Affix,
+	BackTop,
 	Avatar,
 	MenuItem
 };
