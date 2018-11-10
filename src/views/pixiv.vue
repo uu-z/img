@@ -135,7 +135,7 @@ export default {
 
 	.toolbox {
 		margin: 0 auto;
-		padding  0 0 5px 0
+		padding  5px
 		background: #f5f5f5;
 		padding-right: 1vw;
 		display: flex;
