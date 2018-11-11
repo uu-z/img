@@ -51,8 +51,8 @@ body {
       }
 
       .img-inner-box:hover {
-        -webkit-transform: scale(1.025, 1.025);
-        transform: scale(1.025, 1.025);
+        -webkit-transform: scale(1.05, 1.05);
+        transform: scale(1.05, 1.05);
       }
 
       .img-inner-box:hover::after {
