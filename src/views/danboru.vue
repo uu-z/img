@@ -1,13 +1,13 @@
 <template lang="pug">
   .danboru
     .toolbox( v-if="$refs.waterfall"  :style="{ maxWidth: waterfallWidth + 'px'}")
-      Input(v-model="options.params.tags" search enter-button @on-search="reload(options.params.tags)" @on-enter="reload(options.params.tags)" )
+      Input(v-model="options.params.tags" search enter-button @on-search="reload" @on-enter="reload" )
       .tags
         Tag(closable @click.native="reload(item)" :key="index" v-for="(item, index) in searchTags" @on-close="removeTags(index)") {{item}}
     .waterfall-box
       vue-waterfall-easy(ref="waterfall" :maxCols="5" :imgWidth="240"  :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
         .img-info(slot-scope="props")
-          a(:href="'https://danbooru.donmai.us/posts/' + props.value.id").title {{props.value.content}}
+          a(:href="'https://danbooru.donmai.us/posts/' + props.value.id").title {{props.value.title || props.value.content}}
 </template>
 
 <script>
@@ -67,10 +67,12 @@ export default {
       let html = cheerio.load(detail.data);
       if (!html) return;
       let src = html("#image").prop("src");
+      let title = html("#original-artist-commentary > h3").text();
       let content = html("#original-artist-commentary > div > p").text();
       if (src !== undefined) {
         Object.assign(img, {
           src,
+          title: title ? title.substring(0, 30) : title,
           content: content ? content.substring(0, 30) : content,
           isHD: true
         });
@@ -98,19 +100,19 @@ export default {
           await this.lodahHD({ img });
         });
       });
+    },
+    reload(tags) {
+      this.searchTags = [...new Set([tags, ...this.searchTags])];
+      this.imgsArr = [];
+      this.options.params = Object.assign(this.options.params, {
+        tags,
+        page: 0
+      });
+      this.loadImage();
+    },
+    removeTags(index) {
+      this.searchTags.splice(index, 1);
     }
-  },
-  reload(tags) {
-    this.searchTags = [...new Set([tags, ...this.searchTags])];
-    this.imgsArr = [];
-    this.options.params = Object.assign(this.options.params, {
-      tags,
-      page: 0
-    });
-    this.loadImage();
-  },
-  removeTags(index) {
-    this.searchTags.splice(index, 1);
   }
 };
 </script>
