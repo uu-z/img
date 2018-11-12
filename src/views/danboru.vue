@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     async clickFn(event, { index, value }) {
+      if (value.isHD) return;
       this.queue.add(
         () => {
           this.lodahHD({ img: value });
