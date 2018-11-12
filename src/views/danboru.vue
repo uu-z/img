@@ -7,7 +7,7 @@
     .waterfall-box
       vue-waterfall-easy(ref="waterfall" :maxCols="5" :imgWidth="240"  :imgsArr="imgsArr" @scrollReachBottom="loadImage" @click="clickFn")
         .img-info(slot-scope="props")
-          a(:href="'https://danbooru.donmai.us/posts/' + props.value.id") id: {{props.value.id}}
+          a(:href="'https://danbooru.donmai.us/posts/' + props.value.id").title {{props.value.content}}
 </template>
 
 <script>
@@ -67,36 +67,45 @@ export default {
       let html = cheerio.load(detail.data);
       if (!html) return;
       let src = html("#image").prop("src");
+      let content = html("#original-artist-commentary > div > p").text();
       if (src !== undefined) {
         Object.assign(img, {
           src,
+          content: content ? content.substring(0, 30) : content,
           isHD: true
         });
       }
     },
     async loadImage(state) {
-      this.options.params.page++;
-      let data = (await axios(this.options)).data;
-      const $ = cheerio.load(data);
-      let imageUrls = $("article")
-        .map((i, el) => {
-          let id = $(el).prop("data-id");
-          let src = $(el)
-            .find("img[class=has-cropped-true]")
-            .prop("src");
-          return {
-            id,
-            src
-          };
-        })
-        .get();
-      this.imgsArr = this.imgsArr.concat(imageUrls);
-      // this.queue.clear();
-      imageUrls.forEach(img => {
-        this.queue.add(async () => {
-          await this.lodahHD({ img });
-        });
-      });
+      this.queue.add(
+        async () => {
+          this.options.params.page++;
+          let data = (await axios(this.options)).data;
+          const $ = cheerio.load(data);
+          let imageUrls = $("article")
+            .map((i, el) => {
+              let id = $(el).prop("data-id");
+              let src = $(el)
+                .find("img[class=has-cropped-true]")
+                .prop("src");
+              return {
+                id,
+                src
+              };
+            })
+            .get();
+          // this.queue.clear();
+          imageUrls.forEach(img => {
+            this.queue.add(async () => {
+              await this.lodahHD({ img });
+            });
+          });
+          this.imgsArr = this.imgsArr.concat(imageUrls);
+        },
+        {
+          priority: 2
+        }
+      );
     },
     reload(tags) {
       this.searchTags = [...new Set([tags, ...this.searchTags])];
@@ -129,13 +138,22 @@ export default {
   }
 
   .img-info {
-    padding: 15px 10px;
+    padding: 10px;
     background: #21243a;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
 
     a {
       color: rgba(255, 255, 255, 0.5);
+    }
+
+    .title {
+      min-height: 40px;
+      display: block;
+      color: #6e8d92;
+      font-size: 14px;
+      margin: 6px 0;
+      overflow-wrap: break-word;
     }
   }
 

@@ -164,6 +164,7 @@ export default {
       color: #6e8d92;
       font-size: 14px;
       margin: 6px 0;
+      overflow-wrap: break-word;
     }
   }
 }
