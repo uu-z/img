@@ -14,10 +14,12 @@
 import axios from "axios";
 import cheerio from "cheerio";
 import store2 from "store2";
+import PQueue from "p-queue";
 
 export default {
   data() {
     return {
+      queue: new PQueue({ concurrency: 5 }),
       options: {
         method: "GET",
         url: "https://danbooru.donmai.us/posts",
@@ -49,16 +51,23 @@ export default {
   },
   methods: {
     async clickFn(event, { index, value }) {
-      const { id, isHD } = value;
-      if (isHD) {
-        window.location.href = `https://danbooru.donmai.us/posts/` + id;
-      }
+      this.queue.add(
+        () => {
+          this.lodahHD({ img: value });
+        },
+        {
+          priority: 1
+        }
+      );
+    },
+    async lodahHD({ img }) {
+      const { id, isHD } = img;
       let detail = await axios.get(`https://danbooru.donmai.us/posts/${id}`);
       let html = cheerio.load(detail.data);
       if (!html) return;
       let src = html("#image").prop("src");
       if (src !== undefined) {
-        Object.assign(value, {
+        Object.assign(img, {
           src,
           isHD: true
         });
@@ -81,6 +90,12 @@ export default {
         })
         .get();
       this.imgsArr = this.imgsArr.concat(imageUrls);
+      // this.queue.clear();
+      imageUrls.forEach(img => {
+        this.queue.add(async () => {
+          await this.lodahHD({ img });
+        });
+      });
     },
     reload(tags) {
       this.searchTags = [...new Set([tags, ...this.searchTags])];

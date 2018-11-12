@@ -753,6 +753,11 @@
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-10.12.3.tgz#3918b73ceed484e58367be5acb79d1775239e393"
   integrity sha1-ORi3PO7UhOWDZ75ay3nRd1I545M=
 
+"@types/p-queue@^2.3.1":
+  version "2.3.1"
+  resolved "http://registry.npm.taobao.org/@types/p-queue/download/@types/p-queue-2.3.1.tgz#2fb251e46e884e31c4bd1bf58f0e188972353ff4"
+  integrity sha1-L7JR5G6ITjHEvRv1jw4YiXI1P/Q=
+
 "@vue/component-compiler-utils@^2.0.0":
   version "2.3.0"
   resolved "http://registry.npm.taobao.org/@vue/component-compiler-utils/download/@vue/component-compiler-utils-2.3.0.tgz#4f580f1b28fc7685859d87ea0e92a1c0271c93da"
@@ -4561,6 +4566,11 @@ p-locate@^3.0.0:
 p-map@^1.1.1, p-map@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/p-map/-/p-map-1.2.0.tgz#e4e94f311eabbc8633a1e79908165fca26241b6b"
+
+p-queue@^3.0.0:
+  version "3.0.0"
+  resolved "http://registry.npm.taobao.org/p-queue/download/p-queue-3.0.0.tgz#0ef247082f0dd5a21b66e2cfe8fb7b06db13fb52"
+  integrity sha1-DvJHCC8N1aIbZuLP6Pt7BtsT+1I=
 
 p-try@^1.0.0:
   version "1.0.0"
