@@ -19,7 +19,7 @@ import PQueue from "p-queue";
 export default {
   data() {
     return {
-      queue: new PQueue({ concurrency: 5 }),
+      queue: new PQueue({ concurrency: 10 }),
       options: {
         method: "GET",
         url: "https://danbooru.donmai.us/posts",
@@ -77,48 +77,40 @@ export default {
       }
     },
     async loadImage(state) {
-      this.queue.add(
-        async () => {
-          this.options.params.page++;
-          let data = (await axios(this.options)).data;
-          const $ = cheerio.load(data);
-          let imageUrls = $("article")
-            .map((i, el) => {
-              let id = $(el).prop("data-id");
-              let src = $(el)
-                .find("img[class=has-cropped-true]")
-                .prop("src");
-              return {
-                id,
-                src
-              };
-            })
-            .get();
-          // this.queue.clear();
-          imageUrls.forEach(img => {
-            this.queue.add(async () => {
-              await this.lodahHD({ img });
-            });
-          });
-          this.imgsArr = this.imgsArr.concat(imageUrls);
-        },
-        {
-          priority: 2
-        }
-      );
-    },
-    reload(tags) {
-      this.searchTags = [...new Set([tags, ...this.searchTags])];
-      this.imgsArr = [];
-      this.options.params = Object.assign(this.options.params, {
-        tags,
-        page: 0
+      this.options.params.page++;
+      let data = (await axios(this.options)).data;
+      const $ = cheerio.load(data);
+      let imageUrls = $("article")
+        .map((i, el) => {
+          let id = $(el).prop("data-id");
+          let src = $(el)
+            .find("img[class=has-cropped-true]")
+            .prop("src");
+          return {
+            id,
+            src
+          };
+        })
+        .get();
+      this.imgsArr = this.imgsArr.concat(imageUrls);
+      imageUrls.forEach(img => {
+        this.queue.add(async () => {
+          await this.lodahHD({ img });
+        });
       });
-      this.loadImage();
-    },
-    removeTags(index) {
-      this.searchTags.splice(index, 1);
     }
+  },
+  reload(tags) {
+    this.searchTags = [...new Set([tags, ...this.searchTags])];
+    this.imgsArr = [];
+    this.options.params = Object.assign(this.options.params, {
+      tags,
+      page: 0
+    });
+    this.loadImage();
+  },
+  removeTags(index) {
+    this.searchTags.splice(index, 1);
   }
 };
 </script>
